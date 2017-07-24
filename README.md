@@ -1,7 +1,7 @@
 # CS165Project
 Projectile motion and file storage 
 
-For anyone else who stumbles upon this project: this is a 2nd semester c++ project where we set out to apply constant a
+For anyone else who stumbles upon this project: this is a 2nd semester c++ project where we set out to apply constant 
 accleration equations to a program. It's a little dissapointing how little physics actually went into this project.
 
 ok. here is the jist of what have so far....
