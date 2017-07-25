@@ -4,14 +4,13 @@
 //
 //  Created by Nicholas Cooke on 7/15/17.
 //  Copyright © 2017 Nicholas Cooke. All rights reserved.
-//
 
 #include <iostream>
-#include "Projectile.hpp"
+#include "Projectile.cpp"
 #include <iomanip>
 #include <cmath>
 #include <cctype>
-#include "StackChar.hpp"
+#include "StackChar.cpp"
 #include <cstdlib>
 
 using namespace std;
@@ -44,8 +43,7 @@ int main ()
 
 
 // Output Section
-    cout << setprecision(object.getSigFig()) << showpoint;
-    //cout.precision(object.getSigFig());
+    cout.precision(object.getSigFig());
     cout << "**********Results**********";
     cout << endl << "Displacement: "<< object.calcDisplacement()
         << endl << "Max height: " <<object.calcMaxHeight() << endl
@@ -70,19 +68,26 @@ void input (Projectile& object)
 }
 void getValue(Projectile& object, const char Z)
 {
-    int S = 16;
-    char val[S];
-    
+	char *val;
+	int S;
+
     bool status = false;
     while (status == false)
     {
-        status = true;
+		status = true;
+		string userInput;
+
+
         cout << "Initail Velocity "<< Z <<": ";
-        cin >> val;
-        
+		cin >> userInput;
+
+		S = userInput.length() + 1;
+		val = new char[S];
+		strcpy(val, userInput.c_str());
+
         try
         {
-            object.inputVet(val, S);
+			object.inputVet(val, strlen(val));
         }
         catch(Projectile::LeadingZero)
         {
@@ -109,8 +114,6 @@ void getValue(Projectile& object, const char Z)
     
     }
     int passer = sigfigs(val, S);
-    
-   // cout << fixed;
 
     double value = atof(val);
     if (Z == 'X')
@@ -139,7 +142,7 @@ int sigfigs(char value[], int S)
     //If the input has a "." the sigfigs =...
     if(hasDot(value, S))
     {
-       // cout << "Dot found.";
+        cout << "Dot found.";
         while(value[count] != '\0')
         {
             if(isdigit(value[count]))
@@ -148,6 +151,7 @@ int sigfigs(char value[], int S)
             }
             count++;
         }
+        
     }
     else
     {
@@ -188,7 +192,10 @@ int sigfigs(char value[], int S)
                 sigFIG += stac.stackSize();
             }
         }
+        
+        
     }
+    
     return sigFIG;
 }
 //*******************************************************************************************************
